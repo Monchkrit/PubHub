@@ -66,6 +66,11 @@ public class UpdateBookServlet extends HttpServlet {
 			request.getSession().setAttribute("message", "Book successfully updated");
 			request.getSession().setAttribute("messageClass", "alert-success");
 			response.sendRedirect("ViewBookDetails?isbn13=" + isbn13);
+		if(isTagSuccess) {
+			request.getSession().setAttribute("message", "Book successfully updated");
+			request.getSession().setAttribute("messageClass", "alert-success");
+			response.sendRedirect("AddTag?isbn13=" + isbn13);
+		}
 		}else {
 			request.getSession().setAttribute("message", "There was a problem updating this book");
 			request.getSession().setAttribute("messageClass", "alert-danger");

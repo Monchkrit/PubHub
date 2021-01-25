@@ -20,13 +20,13 @@ public class TagDAOImpl implements TagDAO {
 		try
 		{
 			connection = DAOUtilities.getConnection();
-			String sql = "INSERT INTO Tags VALUES (?,?)";
+			String sql = "INSERT INTO book_tags (isbn_13, tag_name, tag_count) VALUES (?,?,?)";
 			stmt = connection.prepareStatement(sql);
 			
 			stmt.setString(1, tag.getisbn_13());
 			stmt.setString(2, tag.gettag_name());
 			stmt.setInt(3, 1);
-			
+			System.out.println(stmt);
 			if (stmt.executeUpdate() != 0)
 				return true;
 			else
