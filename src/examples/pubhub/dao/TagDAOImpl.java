@@ -20,12 +20,12 @@ public class TagDAOImpl implements TagDAO {
 		try
 		{
 			connection = DAOUtilities.getConnection();
-			String sql = "INSERT INTO Tags VALUES (?,?,?)";
+			String sql = "INSERT INTO Tags VALUES (?,?)";
 			stmt = connection.prepareStatement(sql);
 			
 			stmt.setString(1, tag.getisbn_13());
 			stmt.setString(2, tag.gettag_name());
-			stmt.setBytes(3, tag.getContent());
+			stmt.setInt(3, 1);
 			
 			if (stmt.executeUpdate() != 0)
 				return true;
@@ -164,5 +164,37 @@ public class TagDAOImpl implements TagDAO {
 			System.out.println("Could not close the SQL connection!");
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public int tagCount(String isbn, String tag_name) {
+		int number = 0;
+			try
+			{
+				connection = DAOUtilities.getConnection();
+				String sql = "SELECT COUNT FROM book_tags WHERE isbn_13=? && tag_name=?";
+				stmt = connection.prepareStatement(sql);
+				
+				stmt.setString(1, isbn);
+				stmt.setString(2, tag_name);
+				ResultSet rs = stmt.executeQuery();
+				
+				while (rs.next())
+				{
+					number += 1;
+					System.out.println("here is a number going up.");
+				}
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+				return 1;
+			}
+			finally
+			{
+				closeResources();
+			}
+			
+			return number;
 	}
 }

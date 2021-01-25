@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import examples.pubhub.model.Book;
+import examples.pubhub.model.Tag;
 import examples.pubhub.utilities.DAOUtilities;
 
 /**
@@ -265,6 +266,36 @@ public class BookDAOImpl implements BookDAO {
 			closeResources();
 		}
 	}
+	
+	@Override
+	public boolean addTag(String isbn13, String tag_name)
+	{
+		try {
+			connection = DAOUtilities.getConnection();
+			String sql = "INSERT INTO book_tags VALUES (?, ?, ?)"; // The variables are isbn, tag, and tag count.
+			stmt = connection.prepareStatement(sql);
+			
+			// But that's okay, we can set them all before we execute
+			stmt.setString(1, isbn13);
+			stmt.setString(2,  tag_name);
+			
+			
+			
+			// If we were able to add our book to the DB, we want to return true. 
+			// This if statement both executes our query, and looks at the return 
+			// value to determine how many rows were changed
+			if (stmt.executeUpdate() != 0)
+				return true;
+			else
+				return false;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			closeResources();
+		}
+	}
 
 	
 	/*------------------------------------------------------------------------------------------------*/
@@ -282,20 +313,28 @@ public class BookDAOImpl implements BookDAO {
 			stmt.setDouble(3, book.getPrice());
 			stmt.setString(4, book.getIsbn13());
 			
-			System.out.println(stmt);
 			
+
 			if (stmt.executeUpdate() != 0)
-				return true;
-			else
-				return false;
 			
+//				String sql1 = "INSERT INTO book_tags (isbn13=?, tag_name=?, tag_count=?)";
+//				
+//				stmt = connection.prepareStatement(sql1);
+//			
+//				stmt.setString(1, book.getIsbn13());
+//				stmt.setString(2, "tag_name");
+//				stmt.setInt(3, 1);
+//				
+//				if (stmt.executeUpdate() != 0)
+					return true;
+				else
+					return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		} finally {
-			closeResources();
+			closeResources();	
 		}
-		
 	}
 
 	

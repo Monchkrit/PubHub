@@ -38,8 +38,9 @@ public class ViewBookDetailsServlet extends HttpServlet {
 		
 		BookDAO dao = DAOUtilities.getBookDAO();
 		Book book = dao.getBookByISBN(isbn13);
-		TagDAO tag_dao = DAOUtilities.getTagsDAO();
-		List<Tag> tags = tag_dao.bookTags(isbn13);
+		
+		TagDAO tagdao = DAOUtilities.getTagsDAO();
+		List<Tag> tags = tagdao.bookTags(isbn13);
 		
 		request.setAttribute("book", book);
 		request.setAttribute("tags", tags);

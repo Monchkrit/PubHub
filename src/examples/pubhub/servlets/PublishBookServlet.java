@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -13,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import examples.pubhub.dao.BookDAO;
+import examples.pubhub.dao.TagDAO;
 import examples.pubhub.model.Book;
+import examples.pubhub.model.Tag;
 import examples.pubhub.utilities.DAOUtilities;
 
 @MultipartConfig // This annotation tells the server that this servlet has
@@ -34,6 +37,8 @@ public class PublishBookServlet extends HttpServlet {
 
 		BookDAO database = DAOUtilities.getBookDAO();
 		Book tempBook = database.getBookByISBN(isbn13);
+		
+
 		if (tempBook != null) {
 			// ASSERT: book with isbn already exists
 
@@ -49,6 +54,8 @@ public class PublishBookServlet extends HttpServlet {
 			book.setAuthor(req.getParameter("author"));
 			book.setPublishDate(LocalDate.now());
 			book.setPrice(Double.parseDouble(req.getParameter("price")));
+			
+			
 
 			// Uploading a file requires the data to be sent in "parts", because
 			// one HTTP packet might not be big

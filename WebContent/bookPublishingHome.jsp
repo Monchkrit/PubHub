@@ -55,7 +55,9 @@
 						<td>
 						<c:forEach var="tag" items="${tags }">
 							
-							"${tag.tag_name }"
+							<c:if test="${tag.isbn_13 == book.isbn13 }" >							
+								"${tag.tag_name }"
+							</c:if>
 						</c:forEach>
 						</td>
 						<td><form action="DownloadBook" method="get">

@@ -3,7 +3,7 @@ package examples.pubhub.model;
 public class Tag {
 	public String isbn_13;
 	public String tag_name;
-	public byte[] content;
+	public int tag_count;
 	
 	public String getisbn_13()
 	{
@@ -25,11 +25,13 @@ public class Tag {
 		this.tag_name = tag_name;
 	}
 	
-	public byte[] getContent() {
-		return content;
+	public void settag_count(int tag_count)
+	{
+		this.tag_count = tag_count;
 	}
-
-	public void setContent(byte[] content) {
-		this.content = content;
+	
+	public int gettag_count()
+	{
+		return tag_count;
 	}
 }
